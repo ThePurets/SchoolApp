@@ -14,8 +14,8 @@ public class Course {
     //no añadimos ni teacher ni studentList porque deben ser nullables
     public Course(String id, String name, double price) {
         setId(RandomClass.randomString());
-        this.name = name;
-        this.price = price;
+        setName(name);
+        setPrice(price);
 
         //añadir la actualización de money_earned en el constructor?
 

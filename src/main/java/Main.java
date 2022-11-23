@@ -1,31 +1,18 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    /*private static List<String> getInputData(String... questions) {
-        Scanner scanner = new Scanner(System.in);
-        List<String> inputData = new ArrayList<>();
-        for(String question: questions) {
-            System.out.println("Introduce your mail: \n");
-            inputData.add(scanner.next());
-        }
+    public static void main(String[] args) throws IOException {
 
-        return inputData;
-    }*/
+            Menu.menuStart();
+/*
 
+      List<String> employeeData = getInputData("Birnak", "Domar", "Ruppert");
 
-    public static void main(String[] args) {
-
-
-      /*  List<String> employeeData = getInputData("Birnak", "Domar", "Ruppert");
-
-        System.out.println(employeeData);*/
-
-
-
-
+        System.out.println(employeeData);
 
         //creamos curso
         Course course = new Course("34", "History",45.6);
@@ -129,4 +116,6 @@ public class Main {
         System.out.println(school.showProfit());
 
     }
+    */
+   }
 }
