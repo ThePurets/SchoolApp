@@ -4,13 +4,15 @@ import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Menu {
+
+    static School school = new School("");
     public static void menuStart() throws IOException {
         System.out.println("Welcome to the School System App");
         nameOfSchool();
         menuSelectOption();
     }
     public static void nameOfSchool(){
-        School school = new School("");
+
         Scanner input = new Scanner(System.in);
         System.out.println("Enter a name for the school: ");
         school.setName(input.next());
@@ -85,7 +87,6 @@ public class Menu {
     }
     public static void userSelectCommands() throws IOException {
 
-        School school = new School("");
         Scanner input = new Scanner(System.in);
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -93,60 +94,63 @@ public class Menu {
         System.out.println("Each command allows you to perform a task, select a command and follow the instructions... ");
         System.out.println("\n\n\n\n");
 
-        System.out.println("Select a command: ");
-        System.out.println("1. ENROLL (This command will help enroll the student specified in the corresponding course)");
-        System.out.println("2. ASSIGN (This command will help assign the teacher specified to the corresponding course)");
-        System.out.println("3. SHOW COURSES (This command will display a list of all courses)");
-        System.out.println("4. LOOK UP COURSES (This command will display the full details of the specified course)");
-        System.out.println("5. SHOW STUDENTS (This command will display a list of all students)");
-        System.out.println("6. LOOKUP STUDENT (This command will display the full details of the specified student)");
-        System.out.println("7. SHOW TEACHERS (This command will display a list of all teachers)");
-        System.out.println("8. LOOKUP TEACHER ( This command will display the full details of the specified teacher)");
-        System.out.println("9. SHOW PROFIT (This command will calculate (The total money earned from all courses))");
-        System.out.println("0. BACK");
+        int opcCommand = 0;
+        do {
+            System.out.println("Select a command: ");
+            System.out.println("1. ENROLL (This command will help enroll the student specified in the corresponding course)");
+            System.out.println("2. ASSIGN (This command will help assign the teacher specified to the corresponding course)");
+            System.out.println("3. SHOW COURSES (This command will display a list of all courses)");
+            System.out.println("4. LOOK UP COURSES (This command will display the full details of the specified course)");
+            System.out.println("5. SHOW STUDENTS (This command will display a list of all students)");
+            System.out.println("6. LOOKUP STUDENT (This command will display the full details of the specified student)");
+            System.out.println("7. SHOW TEACHERS (This command will display a list of all teachers)");
+            System.out.println("8. LOOKUP TEACHER ( This command will display the full details of the specified teacher)");
+            System.out.println("9. SHOW PROFIT (This command will calculate (The total money earned from all courses))");
+            System.out.println("0. BACK");
 
-        int opcCommand = input.nextInt();
+            opcCommand = input.nextInt();
 
-        if (opcCommand == 0) {
+            if (opcCommand == 0) {
 
-            System.out.println("Are you sure? Y / N");
-            Scanner inputScanner2 = new Scanner(System.in);
-            String opc0 = inputScanner2.next();
+                System.out.println("Are you sure? Y / N");
+                Scanner inputScanner2 = new Scanner(System.in);
+                String opc0 = inputScanner2.next();
 
-            if (opc0.equals("y") || opc0.equals("Y")) {
-                menuSelectOption();
-            }else{
-                userSelectCommands();
-            }
-
-        }else if (opcCommand < 0 || opcCommand >=10){
-
-            System.out.println("Please enter a valid number");
-
-        }else{
-
-            try{
-
-                switch (opcCommand){
-
-                    case 1 -> school.enroll("","");
-                    case 2 -> school.assign("","");
-                    case 3 -> school.getCourseList();
-                    case 4 -> school.lookUpCourse("");
-                    case 5 -> school.getStudentList();
-                    case 6 -> school.lookUpStudent("");
-                    case 7 -> school.getTeacherList();
-                    case 8 -> school.lookUpTeacher("");
-                    case 9 -> school.showProfit();
-                    default -> throw new IllegalStateException("Please enter a valid number " + opcCommand);
+                if (opc0.equals("y") || opc0.equals("Y")) {
+                    menuSelectOption();
+                }else{
+                    userSelectCommands();
                 }
 
-            }catch(IllegalArgumentException e){System.out.println("Please enter a valid number");}
-        }
+            }else if (opcCommand < 0 || opcCommand >=10){
+
+                System.out.println("Please enter a valid number");
+
+            }else{
+
+                try{
+
+                    switch (opcCommand){
+
+                        case 1 -> school.enrollData();
+                        case 2 -> school.assignData();
+                        case 3 -> System.out.println(school.getCourseList());
+                        case 4 -> school.getDataCourse();
+                        case 5 -> System.out.println(school.getStudentList());
+                        case 6 -> school.getDataStudent();
+                        case 7 -> System.out.println(school.getTeacherList());
+                        case 8 -> school.getDataTeacher();
+                        case 9 -> System.out.println(school.showProfit());
+                        default -> throw new IllegalStateException("Please enter a valid number " + opcCommand);
+                    }
+
+                }catch(IllegalArgumentException e){System.out.println("Please enter a valid number");}
+            }
+        }while (opcCommand != 0);
+
     }
     public static void addTeacher() throws IOException {
 
-        School school = new School("");
 
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         Scanner input2 = new Scanner(System.in);
@@ -202,7 +206,6 @@ public class Menu {
     }
     public static void addCourses() throws IOException {
 
-        School school = new School("");
 
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         Scanner input3 = new Scanner(System.in);
@@ -254,7 +257,7 @@ public class Menu {
         addStudent();
     }
     public static void addStudent() throws IOException {
-        School school = new School("");
+
 
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         Scanner input4 = new Scanner(System.in);
@@ -285,6 +288,7 @@ public class Menu {
 
                     Student student = new Student(name, address, email);
                     school.getStudentList().add(student);
+
 
                 }
 

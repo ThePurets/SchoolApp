@@ -1,129 +1,177 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class School {
 
-    private String name;
+private String name;
     private List<Student> studentList = new ArrayList<>();
     private List<Teacher> teacherList = new ArrayList<>();
     private List<Course> courseList = new ArrayList<>();
 
-    public School(String name) {
 
+
+    public School(String name) {
         setName(name);
+    }
+
+
+    public void enrollData() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        //show lists
+
+        System.out.println("List of students: ");
+        System.out.println(studentList.toString());
+        System.out.println(" ");
+        System.out.println("List of courses: ");
+        System.out.println(courseList.toString());
+
+        //get data
+
+        System.out.println("Specify Student Id:");
+        String studentId = scanner.nextLine();
+        System.out.println("Specify Course Id:");
+        String courseId = scanner.nextLine();
+
+        //apply method
+
+        enroll(studentId, courseId);
+
+
+    }
+
+    public void assignData() {
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        //show lists
+
+        System.out.println("List of teachers: ");
+        System.out.println(teacherList.toString());
+        System.out.println(" ");
+        System.out.println("List of courses: ");
+        System.out.println(courseList.toString());
+
+        //get data
+
+        System.out.println("Specify Teacher Id:");
+        String teacherId = scanner.nextLine();
+        System.out.println("Specify Course Id:");
+        String courseId = scanner.nextLine();
+
+        //apply method
+
+        assign(teacherId, courseId);
+
+
     }
 
     public void enroll(String studentId, String courseId) {
 
-
-        //check if we have an student with this id
-
-        for (Student student : studentList) {
-
-            if (Objects.equals(studentId, student.getId())) {
-
-                //check if we have a course with this id
-
-                for (Course course : courseList) {
-
-                    if (Objects.equals(courseId, course.getId())) {
-
-                        //add the student to the course studentList
-
-                        course.getStudentListCourse().add(student);
-
-                        //add the course to the courseList of the student
-
-                        student.getCourseListOfStudent().add(course);
-
-                        //update variable money_earned
-
-                        course.setMoney_earned(course.getMoney_earned() + course.getPrice());
-
-
-                    }
-
-                }
-
-            }
-        }
+        Student student = lookUpStudent(studentId);
+        Course course = lookUpCourse(courseId);
+        course.getStudentListCourse().add(student);
+        student.getCourseListOfStudent().add(course);
+        course.setMoney_earned(course.getMoney_earned() + course.getPrice());
+        System.out.println("The student with id " + studentId +
+                " has been enrolled in the course with id " + courseId);
 
     }
 
-
     public void assign(String teacherId, String courseId) {
 
-        //search teacher in teacherList
-        for (int i = 0; i < getTeacherList().size(); i++) {
+        if (courseId.isBlank()|| teacherId.isBlank()) throw new IllegalArgumentException("Please, introduce ID");
 
-            if (teacherId.equalsIgnoreCase(getTeacherList().get(i).getId())) {
-
-                //search course in courseList
-
-                for (int j = 0; j < getCourseList().size(); j++) {
-
-                    if (courseId.equalsIgnoreCase(getCourseList().get(j).getId())) {
-
-                        //assign teacher to the course
-
-                        getCourseList().get(j).setTeacher(getTeacherList().get(i));
-
-                        //add course to the courseList of teacher
-
-                        getTeacherList().get(i).getCourseListOfTeacher().add(getCourseList().get(j));
-                    }
-                }
-            }
-        }
-
+        Teacher teacher = lookUpTeacher(teacherId);
+        Course course = lookUpCourse(courseId);
+        course.setTeacher(teacher);
+        teacher.getCourseListOfTeacher().add(course);
+        System.out.println("The teacher with id " + teacherId +
+                " has been enrolled in the course with id " + courseId);
     }
 
     public Course lookUpCourse(String courseId) {
 
-        Course course = new Course();
 
         for (int i = 0; i < getCourseList().size(); i++) {
 
             if (courseId.equalsIgnoreCase(getCourseList().get(i).getId())) {
 
-                course = getCourseList().get(i);
+                return getCourseList().get(i);
+
             }
+        }
 
-        } return course;
-
-
+        throw new IllegalArgumentException("The id does not exists.");
     }
+
 
     public Student lookUpStudent(String studentId) {
 
-      Student st = new Student();
 
         for (int i = 0; i < getStudentList().size(); i++) {
 
+
             if (studentId.equalsIgnoreCase(getStudentList().get(i).getId())) {
 
-                st = getStudentList().get(i);
+                return getStudentList().get(i);
+
             }
+        }
+        throw new IllegalArgumentException("The id does not exists.");
 
-        } return st;
+
     }
-
-
 
 
     public Teacher lookUpTeacher(String teacherId) {
 
-        Teacher teacher = new Teacher();
 
         for (int i = 0; i < getTeacherList().size(); i++) {
 
             if (teacherId.equalsIgnoreCase(getTeacherList().get(i).getId())) {
 
-                teacher = getTeacherList().get(i);
+                return getTeacherList().get(i);
+
             }
 
-        } return teacher;
+        }
+        throw new IllegalArgumentException("The id does not exists.");
+
+    }
+
+    public void getDataTeacher() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Specify Teacher Id:");
+        String teacherId = scanner.nextLine();
+
+        System.out.println(lookUpTeacher(teacherId));
+
+    }
+
+    public void getDataCourse() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Specify Course Id:");
+        String courseId = scanner.nextLine();
+
+        System.out.println(lookUpCourse(courseId));
+
+    }
+
+    public void getDataStudent() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Specify Student Id:");
+        String studentId = scanner.nextLine();
+
+        System.out.println(lookUpStudent(studentId));
+
     }
 
     public double showProfit() {
@@ -145,8 +193,6 @@ public class School {
         return earnings - salaries;
     }
 
-
-    //los métodos SHOW() son los GETTERS de las listas
 
 
     public String getName() {
