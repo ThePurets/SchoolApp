@@ -268,7 +268,7 @@ public class Menu {
 
         if (numberOfStudent < 0 || numberOfStudent > 100){
 
-            System.out.println("Introduce un número valido");
+            System.out.println("Please enter a valid number of students");
             addStudent();
 
         }else {
@@ -280,10 +280,10 @@ public class Menu {
                     System.out.println("Enter student's name ");
                     String name = input.readLine();
 
-                    System.out.println("Introduzca la dirección del estudiante ");
+                    System.out.println("Enter student's address ");
                     String address = input.readLine();
 
-                    System.out.println("Enter student's address ");
+                    System.out.println("Enter student's email ");
                     String email = input.readLine();
 
                     Student student = new Student(name, address, email);
